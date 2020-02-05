@@ -2,27 +2,7 @@
 
 <h3>Registro</h3>
 
-<EditForm Model="" OnValidSubmit="">
-	<DataAnnotationsValidator/>
 
-	<div class="form-group">
-		<label for="id">ID</label>
-		<InputNumber @bind-Value="@" class="form-control"/>
-		<ValidationMessage For="@()"/>
-		<br />
-		<button type="button" class="btn btn-outline-primary" @onclick="">Buscar</button>
-	</div>
-
-	<div class="form-group">
-		<label for="fecha">Fecha</label>
-		<InputDate @bind-Value="@" class="form-control"/>
-		<ValidationMessage For="@(()=>)"/>
-	</div>
-
-
-
-
-</EditForm>
 
 @code {
 
