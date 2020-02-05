@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Parcial1_PA2.Entidad
 {
-    public class Producto
+    public class Productos
     {
         [Key]
         public int ProductoId { get; set; }
@@ -20,7 +20,7 @@ namespace Parcial1_PA2.Entidad
         [Required]
         public float Precio { get; set; }
 
-        public Producto()
+        public Productos()
         {
             ProductoId = 0;
             Fecha = DateTime.Now;

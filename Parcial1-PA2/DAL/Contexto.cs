@@ -14,6 +14,6 @@ namespace Parcial1_PA2.DAL
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(@"Server=EMIL56\SQLEXPRESS; Database=Parcial1DB; trusted_connection=true");
         }
-        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Productos> Productos { get; set; }
     }
 }
