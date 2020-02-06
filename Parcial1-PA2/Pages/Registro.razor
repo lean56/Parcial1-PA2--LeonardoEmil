@@ -35,7 +35,7 @@
 
 	<div class="form-inline">
 		<label style="margin:20px;" for="ganancia"> %Ganancia</label>
-		<InputNumber @bind-Value="@Producto.Ganancia" class="form-control" />
+		<InputNumber @bind-Value="@Producto.Ganancia" class="form-control"  @oninput="CalculoPrecio" @onfocusin="CalculoPrecio" @onfocusout="CalculoPrecio"  />
 		<ValidationMessage For="@(()=>Producto.Ganancia)"/>
 	</div>
 
