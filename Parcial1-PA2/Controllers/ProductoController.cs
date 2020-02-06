@@ -28,6 +28,7 @@ namespace Parcial1_PA2.Controllers
             db.Productos.Add(producto).State = EntityState.Modified;
             paso = db.SaveChanges() > 0;
 
+
             return paso;
         }
 
