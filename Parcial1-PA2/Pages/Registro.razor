@@ -1,29 +1,58 @@
-﻿@page "/registro"
+﻿@page "/producto"
 @using Parcial1_PA2.Entidad;
+@using Parcial1_PA2.Controllers
 
-<h3>Registro</h3>
+<h3>Registro de Productos</h3>
 
-<EditForm Model="" OnValidSubmit="">
+<EditForm Model="Producto" OnValidSubmit="Guardar">
 	<DataAnnotationsValidator/>
 
-	<div class="form-group">
-		<label for="id">ID</label>
-		<InputNumber @bind-Value="@" class="form-control"/>
-		<ValidationMessage For="@()"/>
+	<div class="form-inline ">
+		<label style="margin:20px;" for="id">ID</label>
+		<InputNumber @bind-Value="@Producto.ProductoId" class="form-control"/>
+		<ValidationMessage For="@(()=>Producto.ProductoId)"/>
 		<br />
-		<button type="button" class="btn btn-outline-primary" @onclick="">Buscar</button>
+		<button type="button" class="btn btn-outline-primary" @onclick="Buscar">Buscar</button>
+	</div>
+
+	<div class="form-inline">
+		<label style="margin:20px;" for="fecha">Fecha</label>
+		<InputDate @bind-Value="@Producto.Fecha" class="form-control"/>
+		<ValidationMessage For="@(()=>Producto.Fecha)"/>
+	</div>
+
+	<div class="form-inline">
+		<label style="margin:20px;" for="descripcion">Descripcion</label>
+		<InputText @bind-Value="@Producto.Descripcion" class="form-control"/>
+		<ValidationMessage For="@(()=>Producto.Descripcion)"/>
+	</div>
+
+	<div class="form-inline">
+		<label style="margin:20px;" for="costo">Costo</label>
+		<InputNumber @bind-Value="@Producto.Costo" class="form-control"/>
+		<ValidationMessage For="@(()=>Producto.Costo)"/>
+	</div>
+
+	<div class="form-inline">
+		<label style="margin:20px;" for="ganancia"> %Ganancia</label>
+		<InputNumber @bind-Value="@Producto.Ganancia" class="form-control" disabled/>
+		<ValidationMessage For="@(()=>Producto.Ganancia)"/>
+	</div>
+
+	<div class="form-inline">
+		<label  style="margin:20px;" for="precio">Precio</label>
+		<InputNumber @bind-Value="@Producto.Precio" class="form-control" disabled />
+		<ValidationMessage For="@(()=>Producto.Precio)"/>
 	</div>
 
 	<div class="form-group">
-		<label for="fecha">Fecha</label>
-		<InputDate @bind-Value="@" class="form-control"/>
-		<ValidationMessage For="@(()=>)"/>
+		<button type="submit" class="btn btn-outline-secondary" @onclick="Limpiar">Nuevo</button>
+		<button type="submit" class="btn btn-outline-primary">Guardar</button>
+		<button type="button" class="btn btn-outline-danger" @onclick="Eliminar">Eliminar</button>
 	</div>
 
-	<div class="form-group">
-		<label for=""
-	</div>
-
+	<br/>
+	<p class="text-success">@mensaje</p>
 
 
 </EditForm>
@@ -31,6 +60,104 @@
 @code {
 
 	public Productos Producto { get; set; }
+	public string mensaje;
+
+	protected override void OnInitialized()
+	{
+		mensaje = string.Empty;
+		Producto = new Productos();
+	}
+
+	public void Guardar()
+	{
+		ProductoController db = new ProductoController();
+
+		if (Producto.ProductoId == 0)
+		{		
+				PorcientoGanancia();
+				CalculoPrecio();
+			if (db.Guardar(Producto))
+			{
+				mensaje = "Producto Guardado";
+			}
+			else
+			{
+				mensaje = "Error al Guardar";
+			}
+		}
+		else
+		{	PorcientoGanancia();
+			CalculoPrecio();
+			if (db.Modificar(Producto))
+			{
+				
+				mensaje = "Producto Modificado";
+			}
+			else
+			{
+				mensaje = "Error al Guardar";
+			}
+		}
+	}
+
+	public void Buscar()
+	{
+		ProductoController db = new ProductoController();
+
+		try
+		{
+			Productos Ptemporal = null;
+			Ptemporal = db.Buscar(Producto.ProductoId);
+
+			if (Ptemporal !=null)
+			{
+				Limpiar();
+				Producto = Ptemporal;
+			}
+			else
+			{
+				Producto = new Productos();
+				mensaje = "Producto no encontrado";
+			}
+		}
+		catch (Exception)
+		{
+
+			throw;
+		}
+	}
+
+	public void Eliminar()
+	{
+		ProductoController db = new ProductoController();
+
+		if (db.Eliminar(Producto.ProductoId))
+		{
+			Limpiar();
+			mensaje = "Producto Eliminado";
+		}
+		else
+		{
+			mensaje = "Error al Guardar";
+		}
+	}
+
+	public void Limpiar()
+	{
+		mensaje = string.Empty;
+		Producto = new Productos();
+	}
+
+	public void PorcientoGanancia()
+	{
+		Producto.Ganancia = Producto.Costo*10/100;
+
+	}
+
+	public void CalculoPrecio()
+	{
+		Producto.Precio = Producto.Ganancia + Producto.Costo;
+	}
 
 
 }

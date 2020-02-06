@@ -11,7 +11,7 @@ namespace Parcial1_PA2.Entidad
         [Key]
         public int ProductoId { get; set; }
         public DateTime Fecha { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Debes agregar una Descripcion")]
         public string Descripcion { get; set; }
         [Required]
         [Range(minimum:1,maximum:10000)]
@@ -25,7 +25,7 @@ namespace Parcial1_PA2.Entidad
             ProductoId = 0;
             Fecha = DateTime.Now;
             Descripcion = string.Empty;
-            Costo = 0;
+            Costo = 1;
             Ganancia = 0;
             Precio = 0;
         }
