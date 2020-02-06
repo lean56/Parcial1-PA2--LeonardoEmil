@@ -35,7 +35,7 @@
 
 	<div class="form-inline">
 		<label style="margin:20px;" for="ganancia"> %Ganancia</label>
-		<InputNumber @bind-Value="@Producto.Ganancia" class="form-control" disabled/>
+		<InputNumber @bind-Value="@Producto.Ganancia" class="form-control" />
 		<ValidationMessage For="@(()=>Producto.Ganancia)"/>
 	</div>
 
@@ -150,13 +150,13 @@
 
 	public void PorcientoGanancia()
 	{
-		Producto.Ganancia = Producto.Costo*10/100;
+	//	Producto.Ganancia = Producto.Costo*Producto.Ganancia/100;
 
 	}
 
 	public void CalculoPrecio()
 	{
-		Producto.Precio = Producto.Ganancia + Producto.Costo;
+		Producto.Precio = Producto.Costo + (Producto.Costo * (Producto.Ganancia / 100));
 	}
 
 
